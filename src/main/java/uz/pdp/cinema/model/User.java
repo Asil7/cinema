@@ -5,6 +5,7 @@ package uz.pdp.cinema.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uz.pdp.cinema.model.enums.Gender;
 
 import javax.persistence.*;
 import java.security.SecureRandom;
@@ -21,16 +22,17 @@ public class User {
     private Integer id;
 
     @Column(nullable = false)
-    public String fullName;
+    private String fullName;
 
     @Column(nullable = false,unique = true)
-    public String  userName;
+    private String  userName;
 
     @Column(nullable = false)
-    public String password;
+    private String password;
 
-    public Date date_of_birth;
+    private Date date_of_birth;
 
+    private Gender gender;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Role> role;
