@@ -1,28 +1,32 @@
 package uz.pdp.cinema.model;
 
-//Asilbek Fayzullayev 14.03.2022 16:22
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+
+//Asilbek Fayzullayev 14.03.2022 18:23
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "rows")
-public class Row {
+@Entity
+public class Actor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer number;
+    @Column(nullable = false)
+    private String name;
 
-    @ManyToOne
-    private Hall hall;
+    @OneToOne
+    private Attachment photo;
 
-    @OneToMany(mappedBy = "row",cascade = CascadeType.ALL)
-    private List<Seat> seats;
+
+    public Actor(String name, Attachment photo) {
+        this.name = name;
+        this.photo = photo;
+    }
 }

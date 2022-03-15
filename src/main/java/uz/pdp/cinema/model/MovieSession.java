@@ -1,28 +1,27 @@
 package uz.pdp.cinema.model;
 
-//Asilbek Fayzullayev 14.03.2022 16:22
+//Asilbek Fayzullayev 14.03.2022 18:23
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "rows")
-public class Row {
+@Entity(name = "movie_sessions")
+public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer number;
+    @ManyToOne
+    private Movie movie;
 
     @ManyToOne
     private Hall hall;
 
-    @OneToMany(mappedBy = "row",cascade = CascadeType.ALL)
-    private List<Seat> seats;
+    private Boolean is_active;
 }
