@@ -7,6 +7,7 @@ import com.sun.xml.internal.ws.message.ByteArrayAttachment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,17 +65,24 @@ public class AttachmentService {
 
     public ApiResponse getAttachmentById(Integer id){
         Optional<Attachment> byId = attachmentRepository.findById(id);
-            if (byId.isPresent()){
+            if (!byId.isPresent()){
                 return new ApiResponse("Attachment not found",false);
             }
-            return new ApiResponse("Success",true);
+            return new ApiResponse("Success",true, byId);
+
+//        Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
+//        if (optionalAttachment.isPresent()) {
+//            Attachment attachment = optionalAttachment.get();
+//            return ResponseEntity.ok(attachment);
+//        }
+//        return null;
 
     }
 
 
     public ApiResponse editAttachment(Integer id, MultipartFile file) {
         Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
-        if (optionalAttachment.isPresent()) {
+        if (!optionalAttachment.isPresent()) {
             return new ApiResponse("Attachment not found!", false);
         }
         try {
@@ -95,7 +103,7 @@ public class AttachmentService {
 
     public ApiResponse deleteAttachment(Integer id) {
         Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
-        if (optionalAttachment.isPresent()) {
+        if (!optionalAttachment.isPresent()) {
             return new ApiResponse("Attachment not found", false);
         }
         AttachmentContent attachmentContent = attachmentContentRepository.getById(id);
@@ -103,7 +111,6 @@ public class AttachmentService {
         attachmentRepository.deleteById(id);
         return new ApiResponse("Successfully deleted", true);
     }
-
 
 }
 

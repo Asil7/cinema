@@ -18,7 +18,7 @@ public class DistributorController {
     DistributorRepository distributorRepository;
 
     // Add Distributor
-    @PostMapping("/addDistributor")
+    @PostMapping()
     public String addDistributor(@RequestBody Distributor distributor){
         boolean b = distributorRepository.existsByName(distributor.getName());
         if (b){
@@ -39,7 +39,7 @@ public class DistributorController {
 
 
     // Edit Distributor
-    @PutMapping("/editDistributor/{id}")
+    @PutMapping("/{id}")
     public String editDistributor(@PathVariable Integer id,@RequestBody Distributor distributor){
         Optional<Distributor> byId = distributorRepository.findById(id);
         if (byId.isPresent()){
@@ -54,7 +54,7 @@ public class DistributorController {
 
 
     // Read by id
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     public Optional<Distributor> getById(@PathVariable Integer id){
         Optional<Distributor> byId = distributorRepository.findById(id);
         return byId;
@@ -62,7 +62,7 @@ public class DistributorController {
 
 
     // Delete Distributor
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public String deleteDistributor(@PathVariable Integer id){
         distributorRepository.deleteById(id);
         return "Distributor deleted";

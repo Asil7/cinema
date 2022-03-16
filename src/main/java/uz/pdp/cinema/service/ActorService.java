@@ -38,7 +38,7 @@ public class ActorService {
 
     public ApiResponse getActorById(Integer id) {
         Optional<Actor> actorRepositoryById = actorRepository.findById(id);
-        if (actorRepositoryById.isPresent()) {
+        if (!actorRepositoryById.isPresent()) {
             return new ApiResponse("Actor not found", false);
         }
         return new ApiResponse("Success", true, actorRepositoryById.get());
@@ -59,7 +59,7 @@ public class ActorService {
 
     public ApiResponse editActor(Integer id, MultipartFile file, Actor actor) {
         Optional<Actor> optionalActor = actorRepository.findById(id);
-        if (optionalActor.isPresent()) {
+        if (!optionalActor.isPresent()) {
             return new ApiResponse("Actor not found", false);
         }
         Actor editActor = optionalActor.get();
@@ -84,9 +84,26 @@ public class ActorService {
             return new ApiResponse("Successfully edited!", true, save);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            return new ApiResponse("Error!!", false);
         }
-        return new ApiResponse("Error!!", false);
+    }
+
+    public ApiResponse deleteActor(Integer id) {
+        Optional<Actor> optionalActor = actorRepository.findById(id);
+        if (!optionalActor.isPresent()) {
+            return new ApiResponse("Actor not found!!", false);
+        }
+        try {
+            Actor actor = optionalActor.get();
+            Attachment attachment = actor.getPhoto();
+            AttachmentContent attachmentContent = attachmentContentRepository.findByAttachmentId(attachment.getId());
+            attachmentContentRepository.deleteById(attachmentContent.getId());
+            attachmentRepository.deleteById(attachment.getId());
+            actorRepository.delete(actor);
+            return new ApiResponse("Successfully deleted!", true);
+        } catch (Exception e) {
+            return new ApiResponse("Error!!", false);
+        }
     }
 }
 

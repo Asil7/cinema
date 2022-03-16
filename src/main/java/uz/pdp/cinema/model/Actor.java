@@ -3,6 +3,8 @@ package uz.pdp.cinema.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -21,6 +23,7 @@ public class Actor {
     @Column(nullable = false)
     private String name;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne
     private Attachment photo;
 
