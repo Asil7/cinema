@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
+@Entity(name = "movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +35,9 @@ public class Movie {
     @OneToOne
     private Attachment coverImg;
 
-    @Column(nullable = false)
-    private String trailerVideoUrl;
+    @OneToOne
+    private Attachment trailerVideoUrl;
 
-    @Column(nullable = false)
     private Date releaseDate;
 
     private Double budget;
@@ -57,4 +57,17 @@ public class Movie {
 
     @ManyToMany
     private List<Actor>actors;
+
+    public Movie(String title, String description, int durationInMin, double minPrice, Attachment coverImg, Attachment trailerVideoUrl, Date releaseDate, Double budget, Distributor distributor, Double distributorShareInPercentage) {
+        this.title = title;
+        this.description = description;
+        this.durationInMin = durationInMin;
+        this.minPrice = minPrice;
+        this.coverImg = coverImg;
+        this.trailerVideoUrl = trailerVideoUrl;
+        this.releaseDate = releaseDate;
+        this.budget = budget;
+        this.distributor = distributor;
+        this.distributorShareInPercentage = distributorShareInPercentage;
+    }
 }

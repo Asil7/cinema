@@ -25,4 +25,7 @@ public class Row {
 
     @OneToMany(mappedBy = "row",cascade = CascadeType.ALL)
     private List<Seat> seats;
+
+    public Row(int i, Hall zal1) {
+    }
 }

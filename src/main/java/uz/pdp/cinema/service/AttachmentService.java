@@ -58,24 +58,17 @@ public class AttachmentService {
     public ApiResponse getAllAttachment() {
         List<Attachment> attachmentList = attachmentRepository.findAll();
         if (attachmentList.size() != 0) {
-        return new ApiResponse("Success",true);
+            return new ApiResponse("Success", true);
         }
-        return new ApiResponse("List Empty",false);
+        return new ApiResponse("List Empty", false);
     }
 
-    public ApiResponse getAttachmentById(Integer id){
+    public ApiResponse getAttachmentById(Integer id) {
         Optional<Attachment> byId = attachmentRepository.findById(id);
-            if (!byId.isPresent()){
-                return new ApiResponse("Attachment not found",false);
-            }
-            return new ApiResponse("Success",true, byId);
-
-//        Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
-//        if (optionalAttachment.isPresent()) {
-//            Attachment attachment = optionalAttachment.get();
-//            return ResponseEntity.ok(attachment);
-//        }
-//        return null;
+        if (!byId.isPresent()) {
+            return new ApiResponse("Attachment not found", false);
+        }
+        return new ApiResponse("Success", true, byId);
 
     }
 
@@ -110,6 +103,21 @@ public class AttachmentService {
         attachmentContentRepository.deleteById(attachmentContent.getId());
         attachmentRepository.deleteById(id);
         return new ApiResponse("Successfully deleted", true);
+    }
+
+    public Attachment saveAttachment(MultipartFile file) {
+        try {
+            Attachment attachment = new Attachment();
+            attachment.setName(file.getName());
+            attachment.setContentType(file.getContentType());
+            attachment.setSize(file.getSize());
+            attachmentRepository.save(attachment);
+            attachmentContentRepository.save(new AttachmentContent(file.getBytes(), attachment));
+            return attachment;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

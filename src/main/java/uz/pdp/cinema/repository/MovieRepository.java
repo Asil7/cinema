@@ -14,9 +14,8 @@ public interface MovieRepository extends JpaRepository<Movie,Integer> {
             "       cast(m.id as varchar) as id,\n" +
             "       title,\n" +
             "       cast(release_date as date)as releaseDate,\n" +
-            "       cast(a.id as varchar) as coverImgId\n" +
+            "       cast(m.cover_img_id as varchar) as coverImgId\n" +
             "from movie m\n" +
-            "join attachments a on a.id = m.cover_img_id\n" +
             "where lower(title) like lower(concat('%', :search, '%'))", nativeQuery = true)
     Page<CustomMovie> findAllByPage(Pageable pageable, @Param("search") String search);
 

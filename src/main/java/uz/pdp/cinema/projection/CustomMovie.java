@@ -1,10 +1,14 @@
 package uz.pdp.cinema.projection;
 
-import java.util.Date;
+import java.sql.Date;
 
 public interface CustomMovie {
     Integer getId();
+
     String getTitle();
+
     Date getReleaseDate();
+
     Integer getCoverImgId();
+
 }

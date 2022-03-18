@@ -1,30 +1,31 @@
 package uz.pdp.cinema.model;
 
-import jdk.jfr.Enabled;
+//Asilbek Fayzullayev 18.03.2022 15:40   
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.sql.Timestamp;
-import java.time.LocalTime;
+import javax.persistence.OneToOne;
 
-//Asilbek Fayzullayev 14.03.2022 18:48
+@Entity(name = "movie_announcements")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
-public class SessionTime {
+public class MovieAnnouncement {
     @Id
     @GeneratedValue
     private Integer id;
 
-    LocalTime time;
+    @OneToOne
+    private Movie movie;
 
-    public SessionTime(LocalTime of) {
+    private Boolean isActive;
+
+    public MovieAnnouncement(Movie movie1, boolean b) {
     }
 }

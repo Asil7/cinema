@@ -5,11 +5,10 @@ package uz.pdp.cinema.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +18,9 @@ public class SessionDate {
     @Id
     @GeneratedValue
     private Integer id;
-    @ManyToOne
-    private MovieSession movieSession;
-    private Date date;
 
+    LocalDate date;
+
+    public SessionDate(LocalDate of) {
+    }
 }

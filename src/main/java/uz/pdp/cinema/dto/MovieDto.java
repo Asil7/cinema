@@ -5,6 +5,7 @@ package uz.pdp.cinema.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 import uz.pdp.cinema.model.Cast;
 import uz.pdp.cinema.model.Distributor;
 import uz.pdp.cinema.model.Genre;
@@ -18,29 +19,29 @@ import java.util.List;
 @Data
 public class MovieDto {
 
-    private Integer id;
-
     private String title;
 
     private String description;
 
     private int durationInMin;
 
+    private MultipartFile coverImgId;
+
+    private MultipartFile trailerVideoUrl;
+
+    private List<Integer> genresId;
+
     private double minPrice;
 
-    private Integer coverImgId;
-
-    private String trailerVideoUrl;
+    private Integer distributorIds;
 
     private Date releaseDate;
 
-    private Double budget;
-
-    private Distributor distributor;
-
     private Double distributorShareInPercentage;
 
-    private List<Cast> casts;
+    private List<Integer> actorIds;
 
-    private List<Genre> genres;
+    private Double budget;
+
+
 }
