@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uz.pdp.cinema.model.MovieSession;
 import uz.pdp.cinema.payload.ApiResponse;
+import uz.pdp.cinema.projection.MovieSessionProjection;
 import uz.pdp.cinema.repository.MovieSessionRepository;
 
 @Service
@@ -25,7 +26,7 @@ public class MovieService {
                 page-1,
                 size
         );
-        Page<MovieSession> allSessionsByPage = movieSessionRepository.findAllSessionsByPage(
+        Page<MovieSessionProjection> allSessionsByPage = movieSessionRepository.findAllSessionsByPage(
                 pageable,
                 search
         );

@@ -1,6 +1,6 @@
 package uz.pdp.cinema.model.enums;
 
-public enum Role_enum {
+public enum RoleEnum {
     ROLE_ADMIN,
     ROLE_USER
 }

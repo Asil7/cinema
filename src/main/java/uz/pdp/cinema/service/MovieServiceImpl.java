@@ -19,6 +19,8 @@ import uz.pdp.cinema.payload.ApiResponse;
 import uz.pdp.cinema.projection.CustomMovie;
 import uz.pdp.cinema.repository.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -106,7 +108,8 @@ public class MovieServiceImpl implements MovieService {
         movie.setActors(actors);
         movie.setDistributor(distributorOptional.get());
         movie.setBudget(movieDto.getBudget());
-        movie.setReleaseDate(movieDto.getReleaseDate());
+        LocalDate localDate = LocalDate.parse(movieDto.getReleaseDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        movie.setReleaseDate(localDate);
         Movie save = movieRepository.save(movie);
 
         return new ResponseEntity(new ApiResponse("success",

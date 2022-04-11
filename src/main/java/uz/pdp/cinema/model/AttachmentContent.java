@@ -18,7 +18,7 @@ public class AttachmentContent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     byte[] data;
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     private Attachment attachment;
 
     public AttachmentContent(byte[] data, Attachment attachment) {

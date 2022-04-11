@@ -5,6 +5,7 @@ package uz.pdp.cinema.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -20,8 +21,10 @@ public class Seat {
 
     private Integer number;
 
+
     @ManyToOne
     private Row row;
+
 
     @OneToOne
     private PriceCategory priceCategory;

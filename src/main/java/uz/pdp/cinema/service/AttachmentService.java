@@ -37,7 +37,7 @@ public class AttachmentService {
 
     public ApiResponse fileUpload(MultipartFile file) {
         try {
-            Attachment saveAttachment = attachmentRepository.save(new Attachment(file.getOriginalFilename(), file.getSize(), file.getContentType()));
+            Attachment saveAttachment = attachmentRepository.save(new Attachment(file.getOriginalFilename(), file.getContentType(), file.getSize()));
             attachmentContentRepository.save(new AttachmentContent(file.getBytes(), saveAttachment));
             return new ApiResponse("Successfully uploaded", true);
         } catch (IOException e) {
@@ -121,26 +121,3 @@ public class AttachmentService {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

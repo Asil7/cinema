@@ -45,7 +45,7 @@ public class ActorService {
     }
 
     public ApiResponse addActor(MultipartFile file, Actor actor) {
-        Attachment attachment = attachmentRepository.save(new Attachment(file.getContentType(), file.getSize(), file.getOriginalFilename()));
+        Attachment attachment = attachmentRepository.save(new Attachment(file.getContentType(),  file.getOriginalFilename(),file.getSize()));
         try {
             attachmentContentRepository.save(new AttachmentContent(file.getBytes(), attachment));
             Actor actor1 = new Actor(actor.getName(), attachment);

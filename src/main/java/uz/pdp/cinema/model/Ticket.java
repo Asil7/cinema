@@ -34,5 +34,14 @@ public class Ticket {
     private TicketStatus ticketStatus;
 
     @ManyToOne
-    private Cart cart;
+    User user;
+
+    public Ticket(MovieSession movieSession, Seat seat, Attachment qrCode, double price, TicketStatus ticketStatus, User user) {
+        this.movieSession = movieSession;
+        this.seat = seat;
+        this.qrCode = qrCode;
+        this.price = price;
+        this.ticketStatus = ticketStatus;
+        this.user = user;
+    }
 }

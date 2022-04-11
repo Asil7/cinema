@@ -12,14 +12,13 @@ public interface SessionTimeRepository extends JpaRepository<SessionTime, Intege
 
     @Query
             (value =
-                    "select distinct st.id  as id,\n" +
-                            "                time,\n" +
-                            "                 rh.afisha_id" +
+                    "select distinct st.id                    as id,\n" +
+                            "                st.time                  as time,\n" +
+                            "                ms.movie_announcement_id as ann\n" +
                             "from session_time st\n" +
-                            "         join reserved_hall rh on st.id = rh.start_time_id\n" +
-                            "where rh.hall_id = :hallId\n" +
-                            "  and afisha_id = :movieId\n" +
-                            "  and rh.start_date_id = :startDateId", nativeQuery = true)
-    List<SessionTimeProjection> getTimesByHallIdAndScheduleId(Integer hallId, Integer movieId, Integer startDateId);
-
+                            "         join movie_session ms on st.id = ms.start_time_id\n" +
+                            "where ms.hall_id = :hallId\n" +
+                            "  and ms.movie_announcement_id = :movieAnnouncementId\n" +
+                            "  and ms.start_date_id = :startDateId", nativeQuery = true)
+    List<SessionTimeProjection> getTimesByHallIdAndAnnouncementIdAndStartDateId(Integer hallId, Integer movieAnnouncementId, Integer startDateId);
 }

@@ -2,9 +2,10 @@ package uz.pdp.cinema.model;
 
 //Asilbek Fayzullayev 14.03.2022 16:08
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,14 +22,19 @@ public class Hall {
     @Column(nullable = false)
     private String name;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL)
     private List<Row> rows;
 
-    private Integer vipAdditionalFeeInPercent;
+    private Double vipAdditionalFeeInPercent;
 
-    public Hall(String s) {
+    public Hall(String name) {
+        this.name = name;
     }
 
-    public Hall(String s, double v) {
+    public Hall(String name, Double vipAdditionalFeeInPercent) {
+        this.name = name;
+        this.vipAdditionalFeeInPercent = vipAdditionalFeeInPercent;
     }
 }

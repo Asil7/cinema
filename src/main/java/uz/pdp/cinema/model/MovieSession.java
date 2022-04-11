@@ -32,6 +32,22 @@ public class MovieSession {
     @ManyToOne
     private SessionTime endTime;
 
-    public MovieSession(MovieAnnouncement batmanAfisha, Hall zal1, SessionDate march18, SessionTime hour11, SessionTime hour13) {
+    public MovieSession(MovieAnnouncement movieAnnouncement, Hall hall, SessionDate startDate, SessionTime startTime, SessionTime endTime) {
+        this.movieAnnouncement = movieAnnouncement;
+        this.hall = hall;
+        this.startDate = startDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieSession{" +
+                "id=" + id +
+                ", hall=" + hall +
+                ", startDate=" + startDate +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }

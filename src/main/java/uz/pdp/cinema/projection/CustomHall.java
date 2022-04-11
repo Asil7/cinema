@@ -5,13 +5,15 @@ package uz.pdp.cinema.projection;
 import org.springframework.data.rest.core.config.Projection;
 import uz.pdp.cinema.model.Hall;
 
+import java.util.UUID;
+
 @Projection(types = Hall.class)
 public interface CustomHall {
 
     Integer getId();
     String getName();
 
-//    UUID getMovieAnnouncementId();
+    Integer getMovieAnnouncementId();
 //
 //    UUID getStartDateId();
 

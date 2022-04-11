@@ -13,11 +13,11 @@ import java.util.UUID;
 @Projection(types = Movie.class)
 public interface CustomMovieById {
 
-    UUID getId();
+    Integer getId();
 
     String getTitle();
 
-    UUID getCoverImgId();
+    Integer getCoverImgId();
 
     LocalDate getReleaseDate();
 

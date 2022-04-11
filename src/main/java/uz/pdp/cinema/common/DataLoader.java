@@ -1,21 +1,25 @@
 package uz.pdp.cinema.common;
 
-//Asilbek Fayzullayev 18.03.2022 17:18   
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.ComponentScan;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import uz.pdp.cinema.model.*;
+import uz.pdp.cinema.model.enums.Gender;
+import uz.pdp.cinema.model.enums.RoleEnum;
 import uz.pdp.cinema.repository.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-@ComponentScan
+
+@Component
 public class DataLoader implements CommandLineRunner {
 
+    @Autowired
+    UserRepository userRepository;
 
     @Value("${spring.sql.init.mode}")
     String initMode;
@@ -29,6 +33,9 @@ public class DataLoader implements CommandLineRunner {
     final SessionTimeRepository sessionTimeRepository;
     final MovieAnnouncementRepository movieAnnouncementRepository;
     final MovieSessionRepository movieSessionRepository;
+    //final PasswordEncoder passwordEncoder;
+    final RoleRepository roleRepository;
+    final PermissionRepository permissionRepository;
 
     public DataLoader(
             RowRepository rowRepository,
@@ -38,8 +45,8 @@ public class DataLoader implements CommandLineRunner {
             SessionDateRepository sessionDateRepository,
             SessionTimeRepository sessionTimeRepository,
             MovieAnnouncementRepository movieAnnouncementRepository,
-            MovieSessionRepository movieSessionRepository
-    ) {
+            MovieSessionRepository movieSessionRepository,
+           /* PasswordEncoder passwordEncoder,*/ RoleRepository roleRepository, PermissionRepository permissionRepository) {
         this.rowRepository = rowRepository;
         this.hallRepository = hallRepository;
         this.attachmentRepository = attachmentRepository;
@@ -48,6 +55,9 @@ public class DataLoader implements CommandLineRunner {
         this.sessionTimeRepository = sessionTimeRepository;
         this.movieAnnouncementRepository = movieAnnouncementRepository;
         this.movieSessionRepository = movieSessionRepository;
+       // this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
+        this.permissionRepository = permissionRepository;
     }
 
     @Override
@@ -84,15 +94,16 @@ public class DataLoader implements CommandLineRunner {
 
 
             //attachment img
-            Attachment movieImg = attachmentRepository.save(new Attachment("movieImg",100000l, "image/jpg"));
+            Attachment movieImg = attachmentRepository.save(new Attachment("movieImg", "image/jpg", 100000L));
             // MOVIES
 
-            Movie movie1 = new Movie("Spiderman","spiderman best of the best",240,4500,null,null,null,200000d,null,null);
-           // Movie movie2 = new Movie("Spiderman", "zxcvzxcv cbvxvxcbxxcv dgfshdfghdfghfg", 110, 40000, movieImg, "youtube.com", LocalDate.now(), 9000000.0, null, 40.0, null, null);
-           // Movie movie3 = new Movie("Superman", "xzcvzcx teyrtyuru bxcxbvcx", 90, 45000, movieImg, "youtube.com", LocalDate.now(), 12000000.0, null, 60.0, null, null);
+            Movie movie1 = new Movie("Batman", "dsgagadsgasgasdg", 120, 50000, movieImg, movieImg, LocalDate.now(), 10000000.0, null, 50.0
+            );
+            Movie movie2 = new Movie("Spiderman", "zxcvzxcv cbvxvxcbxxcv dgfshdfghdfghfg", 110, 40000, movieImg, movieImg, LocalDate.now(), 9000000.0, null, 40.0);
+            Movie movie3 = new Movie("Superman", "xzcvzcx teyrtyuru bxcxbvcx", 90, 45000, movieImg, movieImg, LocalDate.now(), 12000000.0, null, 60.0);
             movieRepository.save(movie1);
-           // Movie spiderman = movieRepository.save(movie2);
-           // Movie superman = movieRepository.save(movie3);
+            Movie spiderman = movieRepository.save(movie2);
+            Movie superman = movieRepository.save(movie3);
 
             // SESSION DATES
             SessionDate march17 = new SessionDate(LocalDate.of(2022, 3, 17));
@@ -116,10 +127,10 @@ public class DataLoader implements CommandLineRunner {
             //MOVIE ANNOUNCEMENTS
             MovieAnnouncement batmanAfisha = movieAnnouncementRepository.save(
                     new MovieAnnouncement(movie1, true));
-//            MovieAnnouncement spidermanAfisha = movieAnnouncementRepository.save(
-//                    new MovieAnnouncement(spiderman, true));
-//            MovieAnnouncement supermanAfisha = movieAnnouncementRepository.save(
-//                    new MovieAnnouncement(superman, true));
+            MovieAnnouncement spidermanAfisha = movieAnnouncementRepository.save(
+                    new MovieAnnouncement(spiderman, true));
+            MovieAnnouncement supermanAfisha = movieAnnouncementRepository.save(
+                    new MovieAnnouncement(superman, true));
 
             // MOVIE SESSIONS
 
@@ -141,45 +152,64 @@ public class DataLoader implements CommandLineRunner {
                             hour18
                     )
             );
-//            movieSessionRepository.save(
-//                    new MovieSession(
-//                            spidermanAfisha,
-//                            zal3Vip,
-//                            march18,
-//                            hour15,
-//                            hour18
-//                    )
-//            );
-//
-//            movieSessionRepository.save(
-//                    new MovieSession(
-//                            spidermanAfisha,
-//                            zal2,
-//                            march19,
-//                            hour11,
-//                            hour13
-//                    )
-//            );
-//            movieSessionRepository.save(
-//                    new MovieSession(
-//                            spidermanAfisha,
-//                            zal2,
-//                            march19,
-//                            hour15,
-//                            hour18
-//                    )
-//            );
-//
-//            movieSessionRepository.save(
-//                    new MovieSession(
-//                            supermanAfisha,
-//                            zal3Vip,
-//                            march19,
-//                            hour11,
-//                            hour13
-//                    )
-//            );
+            movieSessionRepository.save(
+                    new MovieSession(
+                            spidermanAfisha,
+                            zal3Vip,
+                            march18,
+                            hour15,
+                            hour18
+                    )
+            );
 
+            movieSessionRepository.save(
+                    new MovieSession(
+                            spidermanAfisha,
+                            zal2,
+                            march19,
+                            hour11,
+                            hour13
+                    )
+            );
+            movieSessionRepository.save(
+                    new MovieSession(
+                            spidermanAfisha,
+                            zal2,
+                            march19,
+                            hour15,
+                            hour18
+                    )
+            );
+
+            movieSessionRepository.save(
+                    new MovieSession(
+                            supermanAfisha,
+                            zal3Vip,
+                            march19,
+                            hour11,
+                            hour13
+                    )
+            );
+
+
+            Role role_admin = roleRepository.save(new Role("ROLE_ADMIN", null));
+            Role role_user = roleRepository.save(new Role("ROLE_USER", null));
+
+
+            Set<Role> roles = new HashSet<>();
+
+            roles.add(role_admin);
+            roles.add(role_user);
+
+//            userRepository.save(new User(
+//                    "Asil",
+//                    "asil",
+//                    passwordEncoder.encode("7"),
+//                    LocalDate.of(2001, 8, 8),
+//                    Gender.MALE,
+//                    roles));
+    //            userRepository.save(new User("Asil","asil", passwordEncoder.encode("7"),
+    //                    LocalDate.of(2022,4,1),Gender.MALE,roles));
         }
     }
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,5 +23,10 @@ public class Permission {
     private String name;
 
     @ManyToMany
-    private List<Role> role;
+    private Set<Role> role ;
+
+    public Permission(String name, Set<Role> role) {
+        this.name = name;
+        this.role = role;
+    }
 }

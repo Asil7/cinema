@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import uz.pdp.cinema.dto.MovieDto;
 import uz.pdp.cinema.model.Movie;
 import uz.pdp.cinema.payload.ApiResponse;
@@ -50,15 +51,16 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public HttpEntity<?> deleteMovieById(@PathVariable Integer id){
+    public HttpEntity<?> deleteMovieById(@PathVariable Integer id) {
         return movieService.deleteMovie(id);
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity saveMovie(
-            MovieDto movie
-    ) {
+            @RequestPart(name="json")  MovieDto movie,
+            @RequestPart (name = "file")MultipartFile file
+            ) {
         System.out.println(movie);
         movieService.saveMovie(movie);
         return new ResponseEntity("save", HttpStatus.OK);

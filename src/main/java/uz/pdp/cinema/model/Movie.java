@@ -38,7 +38,7 @@ public class Movie {
     @OneToOne
     private Attachment trailerVideoUrl;
 
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     private Double budget;
 
@@ -56,9 +56,9 @@ public class Movie {
 
 
     @ManyToMany
-    private List<Actor>actors;
+    private List<Actor> actors;
 
-    public Movie(String title, String description, int durationInMin, double minPrice, Attachment coverImg, Attachment trailerVideoUrl, Date releaseDate, Double budget, Distributor distributor, Double distributorShareInPercentage) {
+    public Movie(String title, String description, int durationInMin, double minPrice, Attachment coverImg, Attachment trailerVideoUrl, LocalDate releaseDate, Double budget, Distributor distributor, Double distributorShareInPercentage) {
         this.title = title;
         this.description = description;
         this.durationInMin = durationInMin;

@@ -5,6 +5,7 @@ package uz.pdp.cinema.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "rows")
+@Entity(name = "hall_rows")
 public class Row {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +21,11 @@ public class Row {
 
     private Integer number;
 
+
     @ManyToOne
     private Hall hall;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "row",cascade = CascadeType.ALL)
     private List<Seat> seats;
 

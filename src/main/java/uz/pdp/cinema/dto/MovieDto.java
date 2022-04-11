@@ -35,7 +35,7 @@ public class MovieDto {
 
     private Integer distributorIds;
 
-    private Date releaseDate;
+    private String releaseDate;
 
     private Double distributorShareInPercentage;
 

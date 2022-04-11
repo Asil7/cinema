@@ -21,7 +21,7 @@ public class Attachment {
     private String contentType;
 
 
-    public Attachment(String name, Long size, String contentType) {
+    public Attachment(String name, String contentType, Long size) {
         this.name = name;
         this.size = size;
         this.contentType = contentType;
